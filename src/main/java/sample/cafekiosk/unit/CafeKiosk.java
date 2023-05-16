@@ -25,13 +25,7 @@ public class CafeKiosk {
         }
     }
 
-    public int calculateTotalPrice() {
-        int tempPrice = 0;
-        for (Beverage beverage : beverages) {
-            tempPrice += beverage.getPrice();
-        }
-        return tempPrice;
-    }
+
 
     public void remove(Beverage beverage) {
         beverages.remove(beverage);
@@ -48,5 +42,9 @@ public class CafeKiosk {
             throw new IllegalArgumentException("주문 시간이 아닙니다. 관리자에게 문의하세요.");
         }
         return new Order(currentDateTime, beverages);
+    }
+
+    public int calculateTotalPrice() {
+        return beverages.stream().mapToInt(Beverage::getPrice).sum();
     }
 }
