@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sample.cafekiosk.spring.domain.BaseEntity;
@@ -34,5 +35,18 @@ public class Product extends BaseEntity {
     // @Column과 같은 Annotation은 생략 가능합니다.
     private int price;
 
+    /*
+    * Order의 정보가 필요할까요?
+    * _> 아닙니다. 상품이 "자신"이 어느 주문에 포함되어 있는지 알 필요가 없기 때문입니다.
+    * */
 
+    @Builder
+    public Product(String productNumber, ProductType type, ProductSellingStatus sellingStatus,
+        String name, int price) {
+        this.productNumber = productNumber;
+        this.type = type;
+        this.sellingStatus = sellingStatus;
+        this.name = name;
+        this.price = price;
+    }
 }
