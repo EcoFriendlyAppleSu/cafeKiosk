@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sample.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
+import sample.cafekiosk.spring.api.service.order.command.OrderCreateCommand;
 import sample.cafekiosk.spring.api.service.order.response.OrderResponse;
 import sample.cafekiosk.spring.domain.order.Order;
 import sample.cafekiosk.spring.domain.order.OrderRepository;
@@ -36,8 +37,8 @@ public class OrderService {
         this.stockRepository = stockRepository;
     }
 
-    public OrderResponse createOrder(OrderCreateRequest request, LocalDateTime time) {
-        List<String> productNumbers = request.getProductNumbers();
+    public OrderResponse createOrder(OrderCreateCommand command, LocalDateTime time) {
+        List<String> productNumbers = command.getProductNumbers();
         List<Product> duplicateProducts = findProductsBy(productNumbers);
 
         deductStockQuantities(duplicateProducts);
