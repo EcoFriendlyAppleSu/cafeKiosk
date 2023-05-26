@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sample.cafekiosk.spring.api.controller.product.dto.request.ProductCreateRequest;
+import sample.cafekiosk.spring.api.service.product.command.ProductCreateCommand;
 import sample.cafekiosk.spring.api.service.product.response.ProductResponse;
 import sample.cafekiosk.spring.domain.product.Product;
 import sample.cafekiosk.spring.domain.product.ProductRepository;
@@ -24,7 +25,7 @@ public class ProductService {
     // 해결 1. DB pk에 Unique 조건을 등록해 해결하는 방법
     // 해결 2. UUID를 사용해 상품 생성
     @Transactional
-    public ProductResponse createProduct(ProductCreateRequest request) {
+    public ProductResponse createProduct(ProductCreateCommand command) {
 
         /*
          productNumber 부여 : 001, 002, 003, 004 형태
@@ -33,7 +34,7 @@ public class ProductService {
         */
         String nextProductNumber = nextProductNumber();
 
-        Product product = request.toEntity(nextProductNumber);
+        Product product = command.toEntity(nextProductNumber);
         Product savedProduct = productRepository.save(product);
 
         return ProductResponse.of(savedProduct);

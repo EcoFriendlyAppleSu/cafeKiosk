@@ -47,7 +47,7 @@ class ProductServiceTest {
         ProductCreateRequest request = getProductCreateRequest();
 
         // when
-        ProductResponse productResponse = productService.createProduct(request);
+        ProductResponse productResponse = productService.createProduct(request.toCommand());
 
         // then
         List<Product> products = productRepository.findAll();
@@ -67,7 +67,7 @@ class ProductServiceTest {
         ProductCreateRequest request = getProductCreateRequest();
 
         // when
-        ProductResponse productResponse = productService.createProduct(request);
+        ProductResponse productResponse = productService.createProduct(request.toCommand());
 
         // then
         List<Product> products = productRepository.findAll();
