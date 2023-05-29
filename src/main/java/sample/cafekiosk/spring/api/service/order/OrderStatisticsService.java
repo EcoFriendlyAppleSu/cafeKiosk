@@ -21,6 +21,9 @@ public class OrderStatisticsService {
         this.mailService = mailService;
     }
 
+    /*
+    * 아래와 같은 서비스에선 Transactional을 사용하지 않는 것이 좋습니다. why?
+    * */
     public boolean sendOrderStatisticsMail(LocalDate orderDate, String email){
         // 해당 일자에 결제완려된 주문들을 가져와서
         List<Order> orders = orderRepository.findOrdersBy(
