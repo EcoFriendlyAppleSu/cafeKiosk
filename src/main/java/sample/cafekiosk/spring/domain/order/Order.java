@@ -44,7 +44,7 @@ public class Order extends BaseEntity {
 
     @Builder
     public Order(List<Product> products, OrderStatus orderStatus, LocalDateTime registeredDateTime) {
-        this.orderStatus = orderStatus; // Unit Test 작성 시기입니다. 갑이 잘 들어가는지?!
+        this.orderStatus = orderStatus; // Unit Test 작성 시기입니다. 값이 잘 들어가는지?!
         this.totalPrice = calculateTotalPrice(products);
         this.registeredDateTime = registeredDateTime;
         this.orderProducts =  products.stream()

@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+import sample.cafekiosk.spring.IntegrationTestSupport;
 import sample.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
 import sample.cafekiosk.spring.api.service.order.response.OrderResponse;
 import sample.cafekiosk.spring.domain.order.OrderRepository;
@@ -29,9 +30,7 @@ import sample.cafekiosk.spring.domain.product.ProductType;
 import sample.cafekiosk.spring.domain.stock.Stock;
 import sample.cafekiosk.spring.domain.stock.StockRepository;
 
-@ActiveProfiles("test")
-@SpringBootTest
-class OrderServiceTest {
+class OrderServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ProductRepository productRepository;
@@ -183,7 +182,7 @@ class OrderServiceTest {
 
         Stock stock1 = Stock.create("001", 2);
         Stock stock2 = Stock.create("002", 2);
-        stock1.deductQuantity(1); // TODO: 2023/05/18 이렇게 테스트를 작성하면 안됩니다.
+        stock1.deductQuantity(1); // TODO: 2023/05/18 이렇게 테스트를 작성하면 안됩니다. 맥락에 맞지 않는 행위입니다.
         stockRepository.saveAll(List.of(stock1, stock2));
 
 
@@ -191,7 +190,7 @@ class OrderServiceTest {
             .productNumbers(List.of("001", "001", "002", "003"))
             .build();
 
-        // when, then
+        // when, then Test가 깨지더라도 when, then에서 깨져야합니다.
         assertThatThrownBy(() -> orderService.createOrder(request.toCommand(), registeredDateTime) ).isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("재고가 부족한 상품이 있습니다.");
     }
